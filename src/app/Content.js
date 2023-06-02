@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+
 import Hotel1 from "../../public/img/Hotel1.png";
 import Hotel2 from "../../public/img/Hotel2.png";
 import Hotel3 from "../../public/img/Hotel3.png";
@@ -11,14 +15,138 @@ import Hotel9 from "../../public/img/Hotel9.png";
 import Hotel10 from "../../public/img/Hotel10.png";
 
 export default function Content() {
+  const [city, setCity] = useState("");
+  const [filteredHotels, setFilteredHotels] = useState([]);
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  };
+
+  const handleSearch = () => {
+    // Logika pencarian hotel berdasarkan kota destinasi
+    console.log("Searching hotels in", city);
+    // Perform your search logic here
+
+    if (city) {
+      const selectedHotels = hotels[city] || [];
+      setFilteredHotels(selectedHotels);
+    } else {
+      setFilteredHotels([0]);
+     <p>Hotel tidak tersedia</p>
+    }
+  };
+
+  const hotels = {
+    
+    bandung: [
+      {
+        name: "The Bandung Hotel",
+        type: "Hotel",
+        distance: "4.0 Km dari pusat kota",
+        rating: "8.3 - Bagus (170 Ulasan)",
+        price: "Rp.1.500.000",
+        image: Hotel1,
+      },
+      {
+        name: "The Hotel of Bandung City",
+        type: "Hotel",
+        distance: "7.3 Km dari pusat kota",
+        rating: "9.0 - Sangat bagus (1.270 Ulasan)",
+        price: "Rp.4.897.000",
+        image: Hotel2,
+      },
+    ],
+   
+    bogor: [
+      {
+        name: "The Highland Bogor Hotel",
+        type: "Hotel",
+        distance: "2.8 Km dari pusat kota",
+        rating: "8.6 - Bagus (1.320 Ulasan)",
+        price: "Rp.2.500.000",
+        image: Hotel3,
+      },
+      {
+        name: "The Bogor Haritage",
+        type: "Hotel",
+        distance: "5.3 Km dari pusat kota",
+        rating: "8.9 - Sangat bagus (1.533 Ulasan)",
+        price: "Rp.4.997.000",
+        image: Hotel4,
+      },
+    ],
+   
+   
+    jogja: [
+      {
+        name: "The Alana Yogyakarta Hotel & Convention Center",
+        type: "Hotel",
+        distance: "3.8 Km dari pusat kota",
+        rating: "8.5 - Bagus (1.127 Ulasan)",
+        price: "Rp.2.789.000",
+        image: Hotel5,
+      },
+      {
+        name: "Adhisthana Hotel Yogyakarta",
+        type: "Hotel",
+        distance: "1.3 Km dari pusat kota",
+        rating: "8.5 - Bagus (1.533 Ulasan)",
+        price: "Rp.3.500.000",
+        image: Hotel6,
+      },
+    ],
+
+
+    bali: [
+      {
+        name: "Radisson Blu Bali Uluwatu",
+        type: "Resort",
+        distance: "3.1 Km dari pusat kota",
+        rating: "9.2 - Sangat bagus (2.098 Ulasan)",
+        price: "Rp.5.497.000",
+        image: Hotel7,
+      },
+      {
+        name: "The Bali Resort",
+        type: "Resort",
+        distance: "5.1 Km dari pusat kota",
+        rating: "9.2 - Sangat bagus (2.098 Ulasan)",
+        price: "Rp.5.897.000",
+        image: Hotel8,
+      },
+    ],
+    lombok: [
+      {
+        name: "The Lombok Resort",
+        type: "Resort",
+        distance: "3.2 Km dari pusat kota",
+        rating: "8.9 - Bagus (1.450 Ulasan)",
+        price: "Rp.2.300.000",
+        image: Hotel9,
+      },
+      {
+        name: "The Resort of Jakarta City",
+        type: "Resort",
+        distance: "6.5 Km dari pusat kota",
+        rating: "9.5 - Sangat bagus (2.678 Ulasan)",
+        price: "Rp.6.897.000",
+        image: Hotel10,
+      },
+    ],
+  };
+
   return (
     <div className="bg-[#F6F1F1] pb-12">
-      <div className="flex justify-center  items-end gap-3 pb-12" >
+
+<div className="flex justify-center  items-end gap-3 pb-12">
         <div>
           <p>Kota Destinasi :</p>
-          <button className="border border-gray-600 rounded px-5 py-2">
-            Kota Destinasi
-          </button>
+          <input
+            className="border border-gray-600 rounded px-5 py-2 text-md"
+            value={city}
+            onChange={handleCityChange}
+            placeholder="Masukkan kota"
+          />
         </div>
 
         <div>
@@ -38,237 +166,99 @@ export default function Content() {
         </div>
         <div>
           <p>Jumlah Kamar :</p>
-          <button className="border border-gray-600 rounded px-5 py-2">
-            Jumlah Kamar
-          </button>
+          <input className="border border-gray-600 rounded px-5 py-2" 
+          placeholder="Jumlah kamar"/>
+        
+        
         </div>
-        <button className="border border-gray-600 rounded px-5 py-2">
+        <button
+          className="border border-gray-600 rounded px-5 py-2"
+          onClick={handleSearch}
+        >
           Cari
         </button>
       </div>
 
-      <div className="flex justify-evenly flex-wrap" >
+     
 
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel1}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">The Bandung Hotel</p>
-              <p className="text-sm">Hotel</p>
-              <p className="font-semibold text-md mt-5">4.0 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">8.3 - Bagus (170 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.1.500.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
+      <div>
+        {filteredHotels.length > 0 ? (
+          <div>
+            {filteredHotels.map((hotel, index) => (
+              <div key={index}>
+                <div className="flex justify-evenly flex-wrap">
+                  <div className="flex justify-center my-5  bg-white">
+                    <div className="shadow-lg rounded-lg flex">
+                      <div>
+                        <Image
+                          src={hotel.image}
+                          className="object-scale-down h-40 w-auto rounded-l-md "
+                        />
+                      </div>
+                      <div className="pt-3 px-3">
+                        <p className="font-bold text-xl w-64">{hotel.name}</p>
+                        <p className="text-sm">{hotel.type}</p>
+                        <p className="font-semibold text-md mt-5">
+                          {hotel.distance}
+                        </p>
+                        <p className="font-semibold text-md">{hotel.rating}</p>
+                      </div>
+                      <div className="pt-3 px-3">
+                        <p className="font-bold text-xl">{hotel.price}</p>
+                        <p className="text-sm">per malam</p>
+                        <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">
+                          Order{" "}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel2}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">The Hotel of Bandung City</p>
-              <p className="text-sm">Hotel</p>
-              <p className="font-semibold text-md mt-5">7.3 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">9.0 - Sangat bagus (1.270 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.4.897.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
+        ) : (
+          <div>
+            {Object.keys(hotels).map((city) => (
+              <div key={city}>
+                {hotels[city].map((hotel, index) => (
+                  <div key={index} >
+                    <div className="flex justify-evenly flex-wrap">
+                      <div className="flex justify-center my-5  bg-white ">
+                        <div className="shadow-lg rounded-lg flex ">
+                          <div>
+                            <Image
+                              src={hotel.image}
+                              className="object-scale-down h-44 w-auto rounded-l-md "
+                            />
+                          </div>
+                          <div className="pt-3 px-3">
+                            <p className="font-bold text-2xl w-72">
+                              {hotel.name}
+                            </p>
+                            <p className="text-sm">{hotel.type}</p>
+                            <p className="font-semibold text-lg mt-5">
+                              {hotel.distance}
+                            </p>
+                            <p className="font-semibold text-lg">
+                              {hotel.rating}
+                            </p>
+                          </div>
+                          <div className="pt-3 px-3">
+                            <p className="font-bold text-xl">{hotel.price}</p>
+                            <p className="text-sm">per malam</p>
+                            <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">
+                              Order
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel3}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">The Highland Bogor Hotel</p>
-              <p className="text-sm">Hotel</p>
-              <p className="font-semibold text-md mt-5">2.8 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">8.6 - Bagus (1.320 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.2.500.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel4}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">The Bogor Haritage</p>
-              <p className="text-sm">Hotel</p>
-              <p className="font-semibold text-md mt-5">5.3 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">8.9 - Sangat bagus (1.533 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.4.997.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel5}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">The Alana Yogyakarta Hotel & Convention Center</p>
-              <p className="text-sm">Hotel</p>
-              <p className="font-semibold text-md mt-5">3.8 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">8.5 - Bagus (1.127 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.2.789.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel6}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">Adhisthana Hotel Yogyakarta</p>
-              <p className="text-sm">Hotel</p>
-              <p className="font-semibold text-md mt-5">1.3 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">8.7 -  bagus (1.213 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.2.997.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel7}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">Montigo Resorts Seminyak Bali</p>
-              <p className="text-sm">Resorts</p>
-              <p className="font-semibold text-md mt-5">3.8 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">8.9 - Samgat Bagus (2.720 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.5.590.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel8}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">Radisson Blu Bali Uluwatu</p>
-              <p className="text-sm">Hotel</p>
-              <p className="font-semibold text-md mt-5">1.3 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">9.0 - Sangat bagus (2.733 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.6.997.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel9}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">Jivana Resort Lombok</p>
-              <p className="text-sm">Resort</p>
-              <p className="font-semibold text-md mt-5">1.8 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">8.5 - Bagus (1.197 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.4.789.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex justify-center my-5  bg-white">
-          <div className="shadow-lg rounded-lg flex">
-            <div>
-              <Image
-                src={Hotel10}
-                className="object-scale-down h-40 w-auto rounded-l-md "
-              />
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl w-64">Selong Selo Resort Lombok</p>
-              <p className="text-sm">Resort</p>
-              <p className="font-semibold text-md mt-5">3.3 Km dari pusat kota</p>
-              <p  className="font-semibold text-md">8.7 -  bagus (1.713 Ulasan)</p>
-            </div>
-            <div className="pt-3 px-3">
-              <p className="font-bold text-xl" >Rp.4.997.000</p>
-              <p className="text-sm">per malam</p>
-              <button className=" mt-7 rounded-xl bg-green-500 py-1 px-7 text-white font-bold ">Order </button>
-            </div>
-          </div>
-        </div>
-
+        )}
       </div>
     </div>
   );

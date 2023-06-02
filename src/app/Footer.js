@@ -21,7 +21,7 @@ export default function Footer() {
 
       <div className="flex-1">
         <p>Contact</p>
-        <div className="flex gap-3">
+        <div className="flex gap-3 mt-3">
           <ImLocation /> <p> Bandung </p>
         </div>
         <div className="flex gap-3">
@@ -36,7 +36,7 @@ export default function Footer() {
 
       <div className="flex-1">
         <p>Follow Us</p>
-        <div className="flex gap-5">
+        <div className="flex gap-5 mt-3 text-xl">
         <FaFacebook />
         <FaTwitter />
         <FaInstagram/>
