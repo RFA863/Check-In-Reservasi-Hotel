@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import Select from 'react-select';
 
 import Hotel1 from "../../public/img/Hotel1.png";
 import Hotel2 from "../../public/img/Hotel2.png";
@@ -18,21 +19,37 @@ export default function Content() {
   const [city, setCity] = useState("");
   const [filteredHotels, setFilteredHotels] = useState([]);
 
-  const handleCityChange = (event) => {
-    setCity(event.target.value);
+  const handleCityChange = (selectedOption) => {
+    setCity(selectedOption.value);
   };
+
+  const options = [
+    { value: "", label: 'Pilih Kota' },
+    { value: 'bandung', label: 'Bandung' },
+    { value: 'bogor', label: 'Bogor' },
+    { value: 'jogja', label: 'Jogja' },
+    { value: 'bali', label: 'Bali' },
+    { value: 'lombok', label: 'Lombok' }
+  ]
+
+  const kamar = [
+    { value: "", label: 'Pilih kamar' },
+    { value: '1', label: '1 Kamar' },
+    { value: '2', label: '2 Kamar' },
+    { value: '3', label: '3 Kamar' }
+  ]
 
   const handleSearch = () => {
     // Logika pencarian hotel berdasarkan kota destinasi
     console.log("Searching hotels in", city);
     // Perform your search logic here
 
-    if (city) {
+    if (city === "bandung" || city === "bogor" || city === "jogja" || city === "bali" || city === "lombok") {
       const selectedHotels = hotels[city] || [];
       setFilteredHotels(selectedHotels);
     } else {
-      setFilteredHotels([0]);
-     <p>Hotel tidak tersedia</p>
+      setFilteredHotels([]);
+     console.log("salah bro");
     }
   };
 
@@ -79,7 +96,7 @@ export default function Content() {
    
     jogja: [
       {
-        name: "The Alana Yogyakarta Hotel & Convention Center",
+        name: "The Alana Yogyakarta Hotel",
         type: "Hotel",
         distance: "3.8 Km dari pusat kota",
         rating: "8.5 - Bagus (1.127 Ulasan)",
@@ -125,7 +142,7 @@ export default function Content() {
         image: Hotel9,
       },
       {
-        name: "The Resort of Jakarta City",
+        name: "The Resort of Lombok",
         type: "Resort",
         distance: "6.5 Km dari pusat kota",
         rating: "9.5 - Sangat bagus (2.678 Ulasan)",
@@ -141,12 +158,8 @@ export default function Content() {
 <div className="flex justify-center  items-end gap-3 pb-12">
         <div>
           <p>Kota Destinasi :</p>
-          <input
-            className="border border-gray-600 rounded px-5 py-2 text-md"
-            value={city}
-            onChange={handleCityChange}
-            placeholder="Masukkan kota"
-          />
+          <Select options={options}  onChange={handleCityChange} placeholder="Kota destinasi" className="w-60  border border-gray-600 rounded  py-px"/>
+        
         </div>
 
         <div>
@@ -166,7 +179,7 @@ export default function Content() {
         </div>
         <div>
           <p>Jumlah Kamar :</p>
-          <input className="border border-gray-600 rounded px-5 py-2" 
+          <Select options={kamar} className="border border-gray-600 rounded w-52 py-px" 
           placeholder="Jumlah kamar"/>
         
         
@@ -183,7 +196,7 @@ export default function Content() {
 
       <div>
         {filteredHotels.length > 0 ? (
-          <div>
+          <div  className="flex flex-wrap justify-evenly">
             {filteredHotels.map((hotel, index) => (
               <div key={index}>
                 <div className="flex justify-evenly flex-wrap">
@@ -217,14 +230,17 @@ export default function Content() {
             ))}
           </div>
         ) : (
-          <div>
+          <div className="flex flex-wrap justify-evenly">
+          
             {Object.keys(hotels).map((city) => (
               <div key={city}>
+               
                 {hotels[city].map((hotel, index) => (
                   <div key={index} >
-                    <div className="flex justify-evenly flex-wrap">
-                      <div className="flex justify-center my-5  bg-white ">
-                        <div className="shadow-lg rounded-lg flex ">
+                    
+                   
+                      <div className="my-5  bg-white w-fit rounded-lg shadow-lg ">
+                        <div className=" flex ">
                           <div>
                             <Image
                               src={hotel.image}
@@ -252,8 +268,9 @@ export default function Content() {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                      </div>
+                   
+                
                 ))}
               </div>
             ))}
